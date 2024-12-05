@@ -56,5 +56,3 @@ function WeatherApp(){
 }
 
 export default WeatherApp
-
-// test
