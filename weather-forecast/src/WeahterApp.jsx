@@ -14,16 +14,18 @@ function WeatherApp(){
             try{
                 setLoading(true);
 
-                const apiKey = process.env.WEATHER-API-KEY;
+                const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
                 const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=London&aqi=no`)
+                
 
                 if(!response.ok){
-                    throw new Error(`HTTP error! status: ${response.CDN-Status}`)
+                    throw new Error(`HTTP error! status: ${response.Status}`)
                 }
 
                 const result = await response.json();
 
                 setData(result);
+                console.log(data);
 
             }
             catch(err){
@@ -45,11 +47,14 @@ function WeatherApp(){
 
     return(
         <div className="container">
-            <ul>
-                {data.map((item) => (
-                    <li key={item.id}>{item.title}</li>
-                ))}
-            </ul>
+            <div className="current-weather">
+                <h1>Current Weather</h1>
+                <p>temprature:{data.current.temp_c}c/{data.current.temp_f}f</p>
+                <p>wind speed:{data.current.wind_kph}</p>
+                <p>Feels like:{data.current.feelslike_c}</p>
+                <p>humidity:{data.current.humidity}</p>
+            </div>
+           
         </div>
     )
 
